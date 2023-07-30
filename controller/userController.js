@@ -1,6 +1,6 @@
 const UserService = require('../services/userService');
 
-class userController {
+class UserController {
   userService = new UserService();
 
   createUser = async (req, res) => {
@@ -13,4 +13,4 @@ class userController {
     });
   };
 }
-module.exports = userController;
+module.exports = UserController;

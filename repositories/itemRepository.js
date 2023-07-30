@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { items } = require('../models');
 
 class ItemRepository {
@@ -5,14 +6,21 @@ class ItemRepository {
     const getByItem = await items.findAll({});
     return getByItem;
   };
-  addItem = async (name, price, amount, type) => {
-    // if (amount) {
-    //   return (amount += 1);
-    // }
-    await items.create({ name, price, amount, type });
+
+  findItem = async (itemId) => {
+    return await items.findOne({ where: { itemId } });
   };
-  setItem = async (name, price, amount, type) => {
+  typeByItem = async (type) => {
+    const typeByItem = await items.findAll({ where: { type: { [Op.like]: type } } });
+    return typeByItem;
+  };
+  addItem = async (name, price, amount, type) => {
+    const addItem = await items.create({ name, price, amount, type });
+    return addItem;
+  };
+  setItem = async (itemId, name, price, amount, type) => {
     await items.update({ name, price, amount, type }, { where: { itemId } });
+    return await items.findByPk(itemId);
   };
   deletItem = async (itemId) => {
     await items.destroy({ where: { itemId } });

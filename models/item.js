@@ -16,12 +16,44 @@ module.exports = (sequelize, DataTypes) => {
   }
   items.init(
     {
-      itemId: DataTypes.INTEGER,
-      optionId: DataTypes.INTEGER,
-      name: DataTypes.STRING,
-      price: DataTypes.INTEGER,
-      amount: DataTypes.INTEGER,
-      type: DataTypes.ENUM('coffee', 'juice', 'food'),
+      itemId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      optionId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      name: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      price: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      amount: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      type: {
+        allowNull: false,
+        type: DataTypes.ENUM('coffee', 'juice', 'food'),
+      },
+      createdAt: {
+        allowNull: false, // NOT NULL
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        allowNull: false, // NOT NULL
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
     },
     {
       sequelize,

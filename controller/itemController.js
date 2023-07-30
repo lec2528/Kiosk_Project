@@ -10,34 +10,57 @@ class ItemController {
       result: getItem,
     });
   };
-  typebyItem = async (req, res, next) => {
-    const { type } = req.params;
-    const typebyItem = await this.itemService.typebyItem(type);
+  typeByItem = async (req, res, next) => {
+    try {
+      const { type } = req.params;
+      const typebyItem = await this.itemService.typebyItem(type);
+      return res.status(200).json({
+        typebyItem,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(err.status || 500).json({ message: err.message });
+    }
   };
   addItem = async (req, res, next) => {
-    const { name, price, amount, type } = req.body;
-    console.log(type);
-    await this.itemService.addItem(name, price, amount, type);
-    res.status(200).json({
-      message: '상품이 추가되었습니다.',
-    });
+    try {
+      const { name, price, amount, type } = req.body;
+      console.log(type);
+      await this.itemService.addItem(name, price, amount, type);
+      return res.status(200).json({
+        message: '상품이 추가되었습니다.',
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(err.status || 500).json({ message: err.message });
+    }
   };
 
   setItem = async (req, res, next) => {
-    const { itemId, optionId } = req.params;
-    const { name, price, amount, type } = req.body;
+    try {
+      const { itemId } = req.params;
+      const { name, price, amount, type } = req.body;
 
-    const setItemInfo = await this.itemService.setItem(itemId, optionId, name, price, amount, type);
-    res.status(200).json({
-      message: '상품이 수정되었습니다.',
-      setItemInfo,
-    });
+      const setItemInfo = await this.itemService.setItem(itemId, name, price, amount, type);
+      res.status(200).json({
+        message: '상품이 수정되었습니다.',
+        setItemInfo: setItemInfo,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(err.status || 500).json({ message: err.message });
+    }
   };
 
   deleteItem = async (req, res, next) => {
-    const { itemId } = req.params;
+    try {
+      const { itemId } = req.params;
 
-    await this.itemService.deleteItem(itemId);
+      await this.itemService.deleteItem(itemId);
+    } catch (err) {
+      console.log(err);
+      return res.status(err.status || 500).json({ message: err.message });
+    }
   };
 }
 module.exports = ItemController;

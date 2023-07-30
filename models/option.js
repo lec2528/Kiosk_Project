@@ -8,16 +8,37 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.hasMany(models.items, {
+        sourceKey: 'optionId',
+        foreignKey: 'optionId',
+      });
     }
   }
   option.init(
     {
-      optionId: DataTypes.INTEGER,
-      itemId: DataTypes.INTEGER,
-      extraPrice: DataTypes.INTEGER,
-      shotPrice: DataTypes.INTEGER,
-      hot: DataTypes.BOOLEAN,
+      optionId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      extraPrice: {
+        type: DataTypes.INTEGER,
+      },
+      shotPrice: {
+        type: DataTypes.INTEGER,
+      },
+      hot: {
+        type: DataTypes.BOOLEAN,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,

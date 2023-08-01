@@ -22,6 +22,9 @@ class ItemRepository {
     await items.update({ name, price, amount, type }, { where: { itemId } });
     return await items.findByPk(itemId);
   };
+  findByamount = async (amount) => {
+    await items.findAll({ where: amount });
+  };
   deletItem = async (itemId) => {
     await items.destroy({ where: { itemId } });
   };

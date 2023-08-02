@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: 'itemId',
         foreignKey: 'itemId',
       });
-      this.hasOne(models.itemOrderCustomer, {
+      this.hasOne(models.itemOrderCustomers, {
         sourceKey: 'itemId',
         foreignKey: 'itemId',
       });
@@ -46,7 +46,20 @@ module.exports = (sequelize, DataTypes) => {
       },
       type: {
         allowNull: false,
-        type: DataTypes.ENUM('coffee', 'juice', 'food'),
+        type: DataTypes.ENUM(
+          'COFFEE',
+          'coffee',
+          'ADE',
+          'ade',
+          'ICECREAM',
+          'icecream',
+          'JUICE',
+          'juice',
+          'DESSERT',
+          'dessert',
+          'FOOD',
+          'food'
+        ),
       },
       createdAt: {
         allowNull: false, // NOT NULL

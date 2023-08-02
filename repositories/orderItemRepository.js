@@ -12,13 +12,16 @@ class OrderItemRepository {
     return await orderItem.create({ itemId, state });
   };
 
+  checkAmount = async (itemid) => {
+    return await items.findByPk({ where: { itemid } });
+  };
   setOrderstate = async (orderItemId, state, amount) => {
     const t = await sequelize.transaction();
 
     try {
       const orderItemData = await orderItem.findByPk(orderItemId, { transaction: t });
       const newAmount = orderItemData.amount + 1;
-      if (state === 4) {
+      if (state === 2) {
         await orderItem.update({ amount: newAmount }, { where: { orderItemId } }, { transaction: t });
       }
       await t.commit();

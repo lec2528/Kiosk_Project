@@ -1,8 +1,6 @@
 const ItemRepository = require('../repositories/itemRepository');
 const ErrorHandle = require('../apiErrorHandle');
 
-const types = { COFFEE: 'coffee', ADE: 'ade', ICECREAM: 'icecream', JUICE: 'juice', DESSERT: 'dessert', FOOD: 'food' };
-
 class ItemService {
   itemRepository = new ItemRepository();
 
@@ -16,17 +14,33 @@ class ItemService {
   typebyItem = async (type) => {
     const itemType = await this.itemRepository.typeByItem(type);
 
-    if (!types.length === 0) {
+    if (!type.length === 0) {
       throw new ErrorHandle('해당하는 타입의 아이템이 존재하지 않습니다.', 404);
     }
     return itemType;
   };
 
   addItem = async (name, price, amount, type) => {
+    const types = {
+      COFFEE: 'coffee',
+      ADE: 'ade',
+      ICECREAM: 'icecream',
+      JUICE: 'juice',
+      DESSERT: 'dessert',
+      FOOD: 'food',
+    };
+
     if (!name || !price) {
       throw new ErrorHandle('이름 또는 가격을 입력해주세요', 404);
     }
-    if (!types.length === types.value || !type.toLowerCase() in types) {
+    if (
+      type !== types.COFFEE &&
+      type !== types.ADE &&
+      type !== types.ICECREAM &&
+      type !== types.JUICE &&
+      type !== types.FOOD &&
+      type !== types.DESSERT
+    ) {
       throw new ErrorHandle('알맞은 타입을 입력해주세요', 404);
     }
     return await this.itemRepository.addItem(name, price, amount, type);

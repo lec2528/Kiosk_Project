@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { items } = require('../models');
+const { items, option } = require('../models');
 
 class ItemRepository {
   getItem = async () => {
@@ -13,6 +13,9 @@ class ItemRepository {
   typeByItem = async (type) => {
     const typeByItem = await items.findAll({ where: { type: { [Op.like]: type } } });
     return typeByItem;
+  };
+  isExistOption = async (optionId) => {
+    await option.findAll({ where: { optionId } });
   };
   addItem = async (name, price, amount, type) => {
     const addItem = await items.create({ name, price, amount, type });

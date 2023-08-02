@@ -9,11 +9,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasOne(models.itemOrderCustomers, {
+        sourceKey: 'orderCustomerId',
+        foreignKey: 'orderCustomerId',
+      });
     }
   }
   orderCustomer.init(
     {
-      state: DataTypes.BOOLEAN,
+      orderCustomerId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      state: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       sequelize,
